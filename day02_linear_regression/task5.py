@@ -26,8 +26,8 @@ if __name__ == '__main__':
     plt.axis([0, 2, 0, 15])
 
     # let's plot that line:
-    X_new = np.array([[0],[2]])
-    X_new_b = np.c_[np.ones((2,1)), X_new]
+    X_new = np.array([[0], [2]])
+    X_new_b = np.c_[np.ones((2, 1)), X_new]
     y_predict = X_new_b.dot([theta0, theta1])
     plt.plot(X_new, y_predict, "g-")
 
