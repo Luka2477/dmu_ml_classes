@@ -19,11 +19,11 @@ def linear_regression(_x, _y, _theta0=0, _theta1=0, epochs=10000, learning_rate=
 if __name__ == '__main__':
     x = 2 * np.random.rand(100, 1)
     y = 4 + 3 * x + np.random.randn(100, 1)
-
+    
     theta0, theta1, cost = linear_regression(x, y)
 
     plt.plot(x, y, "b.")
-    plt.axis([0, 2, 0, 15])
+    plt.axis([0, 2, 0, 12])
 
     # let's plot that line:
     X_new = np.array([[0], [2]])
