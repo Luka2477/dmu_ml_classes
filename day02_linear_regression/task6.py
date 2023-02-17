@@ -32,7 +32,7 @@ if __name__ == '__main__':
     lm.fit(X, y)
 
     plt.plot(X, y, "g.")
-    plt.axis([0, 2, 0, 15])
+    plt.axis([0, 2, 2, 12])
 
     # fit function
     f = lambda x: lm.coef_ * x + lm.intercept_
