@@ -30,7 +30,7 @@ people = [('Seymour', 'BOS'),
 destination = 'LGA'
 
 flights = {}
-if (os.path.exists('schedule.txt')):
+if os.path.exists('schedule.txt'):
     file1 = open('schedule.txt', 'r')
     Lines = file1.readlines()
     for line in Lines:
@@ -53,8 +53,8 @@ def printschedule(r):
         out = flights[(origin, destination)][int(r[d])]
         ret = flights[(destination, origin)][int(r[d + 1])]
         print('%10s%10s %5s-%5s $%3s %5s-%5s $%3s' % (name, origin,
-                                                out[0], out[1], out[2],
-                                                ret[0], ret[1], ret[2]))
+                                                      out[0], out[1], out[2],
+                                                      ret[0], ret[1], ret[2]))
 
 
 def schedulecost(sol):
@@ -91,16 +91,18 @@ def schedulecost(sol):
 
     return totalprice + totalwait
 
-#Random searching isn’t a very good optimization method, but it makes it easy to
-#understand exactly what all the algorithms are trying to do, and it also serves as a
-#baseline so you can see if the other algorithms are doing a good job.
+
+# Random searching isn’t a very good optimization method, but it makes it easy to
+# understand exactly what all the algorithms are trying to do, and it also serves as a
+# baseline so you can see if the other algorithms are doing a good job.
 def randomoptimize(domain, costf, bestr=None, nRandomAttempts=1000, verbose=False):
     """
     Input:
       bestr: best solution
     """
     best = inf  # best solution function evaluation
-    sols_tried = []  # keep track of what inputs we have tried so we don't retry them (this is really only important for small problems)
+    sols_tried = []  # keep track of what inputs we have tried so we don't retry them (this is really only important
+    # for small problems)
 
     # initialize the search starting location:
     if bestr is None: bestr = [float(random.randint(domain[i][0], domain[i][1])) for i in range(len(domain))]
@@ -145,7 +147,7 @@ def hillclimb(domain, costf, sol=None, verbose=False):
         current = best
         for j in range(len(neighbors)):
             cost = costf(neighbors[j])
-            ###print "Trying neighbors[j]= ", neighbors[j], cost, best
+            # print "Trying neighbors[j]= ", neighbors[j], cost, best
             if cost < best:
                 best, sol = cost, neighbors[j]
                 if verbose:
@@ -201,7 +203,7 @@ def annealingoptimize(domain, costf, vec=None, T=10000.0, cool=0.95, step=1):
         p = pow(math.e, (-eb - ea) / T)
 
         # Is it better, or does it make the probability cutoff?
-        if (eb < ea or random.random() < p): vec = vecb
+        if eb < ea or random.random() < p: vec = vecb
 
         # Decrease the temperature
         T = T * cool
@@ -248,11 +250,12 @@ def geneticoptimize(domain, costf, vec=None, popsize=50, step=1, mutprob=0.2, el
     def crossover(r1, r2):
         lB, uB = 1, max(len(domain) - 1, 1)
         i = random.randint(lB,
-                           uB)  # i=0 returns full r1 array; i=len(domain) returns full r2 array (thus we need i>0 and i<len(domain)
+                           uB)  # i=0 returns full r1 array; i=len(domain) returns full r2 array (thus we need i>0
+        # and i<len(domain)
         return r1[:i] + r2[i:]
 
     # Build the initial population (taken randomly)
-    if (vec is None):
+    if vec is None:
         pop = []
     else:
         pop = [vec]
@@ -287,13 +290,13 @@ def geneticoptimize(domain, costf, vec=None, popsize=50, step=1, mutprob=0.2, el
                 c2 = random.randint(0, topelite)
                 pop.append(crossover(ranked[c1], ranked[c2]))
 
-        if (scores[0][0] < best_score):
+        if scores[0][0] < best_score:
             best_score = scores[0][0]
             num_best = 1
-        elif (scores[0][0] == best_score):
+        elif scores[0][0] == best_score:
             num_best += 1  # keep track of the number of times we have seen this value for a minimum
-        if (num_best >= 10): break;
-        if (printbest):
+        if num_best >= 10: break;
+        if printbest:
             print(best_score)
 
     return scores[0][1]
@@ -302,37 +305,37 @@ def geneticoptimize(domain, costf, vec=None, popsize=50, step=1, mutprob=0.2, el
 # Below, represents a solution in which Seymour takes the second flight of the day from Boston
 # to New York, and the fifth flight back to Boston on the day he returns. Franny
 # takes the fourth flight from Dallas to New York, and the third flight back.
-#s=[1,4,3,2,7,3,6,3,2,4,5,3]
-#printschedule(s)
-#print('Cost of solution - %', schedulecost(s))
-#print("")
+# s=[1,4,3,2,7,3,6,3,2,4,5,3]
+# printschedule(s)
+# print('Cost of solution - %', schedulecost(s))
+# print("")
 
-#print("A random optimize algorithm solution")
+# print("A random optimize algorithm solution")
 
-#The function takes a couple of parameters. Domain is a list of 2-tuples that specify the
-#minimum and maximum values for each variable. The length of the solution is the
-#same as the length of this list. In the current example, there are nine outbound flights
-#and nine inbound flights for every person, so the domain in the list is (0,8) repeated
-#twice for each person.
-#The second parameter, costf, is the cost function, which in this example will be
-#schedulecost.
-#domain=[(0,8)]*(len(people)*2)
-#s=randomoptimize(domain,schedulecost)
-#printschedule(s)
-#print('Cost of solution - %', schedulecost(s))
+# The function takes a couple of parameters. Domain is a list of 2-tuples that specify the
+# minimum and maximum values for each variable. The length of the solution is the
+# same as the length of this list. In the current example, there are nine outbound flights
+# and nine inbound flights for every person, so the domain in the list is (0,8) repeated
+# twice for each person.
+# The second parameter, costf, is the cost function, which in this example will be
+# schedulecost.
+# domain=[(0,8)]*(len(people)*2)
+# s=randomoptimize(domain,schedulecost)
+# printschedule(s)
+# print('Cost of solution - %', schedulecost(s))
 
-#print("")
-#print("Hill climbing")
+# print("")
+# print("Hill climbing")
 
 # Now try hill climbing
-#s=hillclimb(domain,schedulecost)
-#printschedule(s)
-#print('Cost of solution - %', schedulecost(s))
+# s=hillclimb(domain,schedulecost)
+# printschedule(s)
+# print('Cost of solution - %', schedulecost(s))
 
-#print("")
-#print("Genetic Algorithm")
+# print("")
+# print("Genetic Algorithm")
 
 # Now try Genetic Algorithm
-#s=geneticoptimize(domain,schedulecost)
-#printschedule(s)
-#print('Cost of solution - %', schedulecost(s))
+# s=geneticoptimize(domain,schedulecost)
+# printschedule(s)
+# print('Cost of solution - %', schedulecost(s))
