@@ -29,7 +29,7 @@ if __name__ == '__main__':
     y = 4 + 3 * X + np.random.randn(500, 1)
 
     lm = linear_model.LinearRegression()
-    model = lm.fit(X, y)
+    lm.fit(X, y)
 
     plt.plot(X, y, "g.")
     plt.axis([0, 2, 0, 15])
