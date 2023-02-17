@@ -28,7 +28,8 @@ def hit_coordinate(theta, v, width):
         x_hit = 0
     t = x / (v * math.cos(theta))
     y = v * t * math.sin(theta) - 0.5 * 9.81 * t * t
-    if y < 0: y = 0.0
+    if y < 0:
+        y = 0.0
     return x_hit, y
 
 
@@ -42,13 +43,13 @@ def launch(generation, height, width):
     for (theta, v) in generation:
         x_hit, y_hit = hit_coordinate(theta, v, width)
         good = escaped(theta, v, width, height)
-        result = []
-        result.append((width / 2.0, 0.0))
+        result = [(width / 2.0, 0.0)]
         for i in range(1, 20):
             t = i * 0.2
             x = width / 2.0 + v * t * math.cos(theta)
             y = v * t * math.sin(theta) - 0.5 * 9.81 * t * t
-            if y < 0: y = 0
+            if y < 0:
+                y = 0
             if not good and not (0 < x < width):
                 result.append((x_hit, y_hit))
                 break
@@ -80,7 +81,7 @@ def choose(choices):
 
 
 def breed(mum, dad):
-    return (mum[0], dad[1])
+    return mum[0], dad[1]
 
 
 def crossover(generation, width):
@@ -151,7 +152,6 @@ def fire():
     generation0 = list(generation)  # save to contrast with last epoch
 
     for i in range(1, epochs):
-        results = []
         generation = crossover(generation, width)
         mutate(generation)
 
