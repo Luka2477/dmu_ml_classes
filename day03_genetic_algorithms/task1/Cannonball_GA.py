@@ -130,32 +130,34 @@ def display(generation, ax, height, width):
     print("Escaped", free)
 
 
-def display_start_and_finish(generation0, generation, height, width):
+def display_start_and_finish(generation0, generation, height, width, attempt):
     matplotlib.rcParams.update({'font.size': 18})
     fig = plt.figure()
     ax0 = fig.add_subplot(2, 1, 1)  # 2 plots in one column; first plot
     ax0.set_title('Initial attempt')
     display(generation0, ax0, height, width)
     ax = fig.add_subplot(2, 1, 2)  # second plot
-    ax.set_title('Final attempt')
+    ax.set_title(f'{attempt} attempt')
     display(generation, ax, height, width)
+    plt.subplots_adjust(hspace=0.8)
     plt.show()
 
 
 def fire():
     epochs = 1000
     items = 100
-    height = 30
+    height = 60
     width = 10
 
     generation = random_tries(items)
     generation0 = list(generation)  # save to contrast with last epoch
 
-    for i in range(1, epochs):
+    for i in range(1, epochs + 1):
         generation = crossover(generation, width)
         mutate(generation)
 
-    display_start_and_finish(generation0, generation, height, width)
+        if i % (epochs / 10) == 0:
+            display_start_and_finish(generation0, generation, height, width, i)
 
 
 def single_shot():
