@@ -301,16 +301,17 @@ def geneticoptimize(domain, costf, vec=None, popsize=50, step=1, mutprob=0.2, el
 
     return scores[0][1]
 
+
 # Explain setup:
 # Below, represents a solution in which Seymour takes the second flight of the day from Boston
 # to New York, and the fifth flight back to Boston on the day he returns. Franny
 # takes the fourth flight from Dallas to New York, and the third flight back.
-# s=[1,4,3,2,7,3,6,3,2,4,5,3]
-# printschedule(s)
-# print('Cost of solution - %', schedulecost(s))
-# print("")
+s = [1, 4, 3, 2, 7, 3, 6, 3, 2, 4, 5, 3]
+printschedule(s)
+print('Cost of solution - %', schedulecost(s))
 
-# print("A random optimize algorithm solution")
+print("")
+print("A random optimize algorithm solution")
 
 # The function takes a couple of parameters. Domain is a list of 2-tuples that specify the
 # minimum and maximum values for each variable. The length of the solution is the
@@ -318,24 +319,26 @@ def geneticoptimize(domain, costf, vec=None, popsize=50, step=1, mutprob=0.2, el
 # and nine inbound flights for every person, so the domain in the list is (0,8) repeated
 # twice for each person.
 # The second parameter, costf, is the cost function, which in this example will be
-# schedulecost.
-# domain=[(0,8)]*(len(people)*2)
-# s=randomoptimize(domain,schedulecost)
-# printschedule(s)
-# print('Cost of solution - %', schedulecost(s))
+# # schedulecost.
+domain = [(0, 8)] * (len(people) * 2)
+s = randomoptimize(domain, schedulecost)
+printschedule(s)
+print('Cost of solution - %', schedulecost(s))
 
-# print("")
-# print("Hill climbing")
+print("")
+print("Hill climbing")
 
 # Now try hill climbing
-# s=hillclimb(domain,schedulecost)
-# printschedule(s)
-# print('Cost of solution - %', schedulecost(s))
+s = hillclimb(domain, schedulecost)
+printschedule(s)
+print('Cost of solution - %', schedulecost(s))
 
-# print("")
-# print("Genetic Algorithm")
+print("")
+print("Genetic Algorithm")
 
 # Now try Genetic Algorithm
-# s=geneticoptimize(domain,schedulecost)
-# printschedule(s)
-# print('Cost of solution - %', schedulecost(s))
+s = geneticoptimize(domain, schedulecost,
+                    popsize=250,
+                    maxiter=50)
+printschedule(s)
+print('Cost of solution - %', schedulecost(s))
