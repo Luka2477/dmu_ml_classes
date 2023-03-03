@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94af8ae7-3e77-4b29-8c84-9e456f4c5ab4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../day05_data_science/task3/task4.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +44,7 @@
       <recent name="$PROJECT_DIR$/.ipynb_checkpoints/given" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.task7">
+  <component name="RunManager" selected="Python.task6">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="day02_linear_regression" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,9 +173,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.task7" />
         <item itemvalue="Python.task6" />
         <item itemvalue="Python.task5" />
+        <item itemvalue="Python.task7" />
         <item itemvalue="Python.task4" />
         <item itemvalue="Python.task3" />
       </list>
