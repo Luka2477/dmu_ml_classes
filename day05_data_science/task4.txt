@@ -1,0 +1,5 @@
+-- During a year, in which months do we have the highest number of crimes? As you expected?
+
+It is highest in August, likely because the weather is really nice. This means that
+people are going out and having a good time. This could also be due to people being on vacation and
+leaving the house for longer periods of time, leaving the possiblity for theft open.
