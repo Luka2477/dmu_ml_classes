@@ -1,0 +1,3 @@
+-- What is the most “popular” crime in Chicago?
+
+Theft, with about 64,000 cases a year...
