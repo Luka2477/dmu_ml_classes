@@ -1,0 +1,10 @@
+-- Given a rough map of Chicago based on Districts/GPS coordinates.
+-- We can then ask about the concentration of a certain crime.
+-- Compare battery, theft and narcotics – what is happening here?
+-- Compare also with “Deceptive practice”. Is homicide and narcotics related? And what about narcotics and
+-- "crime sexual assault"?
+
+Battery is all over the place, meaning that there is no point of interest.
+Theft is very localized to downtown central. Likely due to a concentration of people, cars and tourists.
+Narcotics is vert localized to one point in the outskirts of Chicago. This is likely due to poverty, gangs and police
+presence.
