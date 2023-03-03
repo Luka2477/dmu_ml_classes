@@ -1,0 +1,4 @@
+-- Sammenlign med programmets næste plot, som viser en lineær årlig tilvækst beregnet ud fra den samlede
+-- tilvækst fra 1950 til 2016. Blå er faktisk tilvækst, rød er vores model.
+
+Vi finder ud af at kurven faktisk ikke er lineær.

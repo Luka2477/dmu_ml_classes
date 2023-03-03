@@ -1,0 +1,4 @@
+-- Kan vi bruge vores model til at beregne hvad befolkningen vil være i 2030? i 2050?
+
+Nej, det vil jeg ikke sige. Vores lineære kurve passer ikke til fremtiden af vores aktuelle kurve, som er stigende i
+højere grad end den lineære.

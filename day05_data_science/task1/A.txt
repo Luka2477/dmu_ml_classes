@@ -1,0 +1,4 @@
+-- I det først plot får vi den faktiske befolknings udvikling.
+-- Er det en lineær udvikling for befolkningstilvæksten?
+
+Den er rimelig lineær. Den ligger i hvert fald meget tæt på den lineære linje.
