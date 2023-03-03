@@ -1,0 +1,4 @@
+-- Yes, it says so in the csv-file title, but where else in the data file itself, can you see in which year these
+-- crimes took place? (Hint: use pandas, and see df.describe() ).
+
+You can see it under the Year column...

@@ -63,7 +63,7 @@ plt.ylabel("Probability", fontsize=14)
 plt.legend(loc="upper left", fontsize=14)
 plt.show()
 
-# Next, it would be interesting to see a plot for both petal-width and petal-length. 
+# Next, it would be interesting to see a plot for both petal-width and petal-length.
 iris = datasets.load_iris()
 
 X = iris["data"][:, (2, 3)]  # petal length, petal width
