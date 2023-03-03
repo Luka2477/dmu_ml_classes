@@ -1,0 +1,3 @@
+-- It appears that the number of crimes go down in February. Why?
+
+Probably due to the weather and that people stay home...
