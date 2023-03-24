@@ -126,11 +126,15 @@ class GeneticAlgo:
 if __name__ == '__main__':
     st = module_time.time()
 
-    genetic_algo = GeneticAlgo(population_size=1000, chromosome_mutation_rate=0.5, gene_mutation_rate=0.5,
+    genetic_algo = GeneticAlgo(population_size=5000, chromosome_mutation_rate=0.2, gene_mutation_rate=0.05,
                                selection_percentage=0.5)
     genetic_algo.population.init_population()
     genetic_algo.population.calc_fitness()
 
+    print(
+        f"Genetic Algorithm |\n\tPoulation size: {genetic_algo.population_size}\n\tSelection percentage: "
+        f"{genetic_algo.selection_percentage}\n\tChromosome mutation rate: {genetic_algo.chromosome_mutation_rate}\n\t"
+        f"Gene mutation rate: {genetic_algo.gene_mutation_rate}")
     print(f"First generation | Best is '{genetic_algo.get_best().get_string()}' with a fitness of "
           f"{genetic_algo.get_best().fitness}")
 
