@@ -51,40 +51,50 @@ x_petal = x[['Petal_Length', 'Petal_Width']]
 
 k = 3
 # running kmeans clustering into two
-# --- USING PETAL DATASET
-# kmeans = KMeans(n_clusters=k, random_state=0).fit(x_petal)
-
 # --- USING SEPAL DATASET
-kmeans = KMeans(n_clusters=k, random_state=0).fit(x_sepal)
+sepal_kmeans = KMeans(n_clusters=k, random_state=0).fit(x_sepal)
+
+# --- USING PETAL DATASET
+petal_kmeans = KMeans(n_clusters=k, random_state=0).fit(x_petal)
 
 # the random state is optionlly, here it is specified so we get determistic clusters.
 # this will contain the labels for our predicted clusters (either 0 or 1)
-labels = kmeans.labels_
+sepal_labels = sepal_kmeans.labels_
 # the centers of the calculated clusters
-clusters = kmeans.cluster_centers_
+sepal_clusters = sepal_kmeans.cluster_centers_
 # printing our cluster centers - there will be 2 of them.
-print(clusters)
+print(sepal_clusters)
 
-# --- USE PETAL DATASET
-# # Plot the Original Classifications
-# plt.subplot(1, 2, 1)
-# plt.scatter(x.Petal_Length, x.Petal_Width, c=colormap[y.Targets], s=40)
-# plt.title('Real Classification')
-#
-# # Plot the Models Classifications
-# plt.subplot(1, 2, 2)
-# plt.scatter(x.Petal_Length, x.Petal_Width, c=colormap[labels], s=40)
-# plt.title('K Mean Classification')
+# the random state is optionlly, here it is specified so we get determistic clusters.
+# this will contain the labels for our predicted clusters (either 0 or 1)
+petal_labels = petal_kmeans.labels_
+# the centers of the calculated clusters
+petal_clusters = petal_kmeans.cluster_centers_
+# printing our cluster centers - there will be 2 of them.
+print(petal_clusters)
+
+plt.figure(figsize=(14, 7))
 
 # --- USE SEPAL DATASET
 # Plot the Original Classifications
-plt.subplot(1, 2, 1)
+plt.subplot(1, 4, 1)
 plt.scatter(x.Sepal_Length, x.Sepal_Width, c=colormap[y.Targets], s=40)
-plt.title('Real Classification')
+plt.title('Sepal Real Classification')
 
 # Plot the Models Classifications
-plt.subplot(1, 2, 2)
-plt.scatter(x.Sepal_Length, x.Sepal_Width, c=colormap[labels], s=40)
-plt.title('K Mean Classification')
+plt.subplot(1, 4, 2)
+plt.scatter(x.Sepal_Length, x.Sepal_Width, c=colormap[sepal_labels], s=40)
+plt.title('Sepal K Mean Classification')
+
+# --- USE PETAL DATASET
+# Plot the Original Classifications
+plt.subplot(1, 4, 3)
+plt.scatter(x.Petal_Length, x.Petal_Width, c=colormap[y.Targets], s=40)
+plt.title('Petal Real Classification')
+
+# Plot the Models Classifications
+plt.subplot(1, 4, 4)
+plt.scatter(x.Petal_Length, x.Petal_Width, c=colormap[petal_labels], s=40)
+plt.title('Petal K Mean Classification')
 
 plt.show()
