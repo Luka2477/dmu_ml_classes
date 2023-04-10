@@ -49,6 +49,8 @@ plt.show()
 x_sepal = x[['Sepal_Length', 'Sepal_Width']]
 x_petal = x[['Petal_Length', 'Petal_Width']]
 
+print(x_sepal)
+
 k = 3
 # running kmeans clustering into two
 # --- USING SEPAL DATASET
