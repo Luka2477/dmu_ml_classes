@@ -13,7 +13,7 @@ from pandas import DataFrame
 
 from numpy import array
 
-from exercise1.helpers import moonscalc
+from exercise1.helpers import calc
 
 
 def show_data():
@@ -32,8 +32,8 @@ def use_mlp():
     classifier = MLPClassifier(solver='lbfgs', random_state=0, hidden_layer_sizes=[50, 25, 10], alpha=0.01)
     classifier.fit(X_train, y_train)
 
-    moonscalc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
-    moonscalc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
+    calc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
+    calc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 
     pyplot.title("Multi-Layer Perceptron")
     pyplot.show()
@@ -43,8 +43,8 @@ def use_logreg():
     classifier = linear_model.LogisticRegression(C=1)
     classifier.fit(X_train, y_train)
 
-    moonscalc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
-    moonscalc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
+    calc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
+    calc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 
     pyplot.title("Logistic Regression")
     pyplot.show()
@@ -65,8 +65,8 @@ def use_dectree():
     classifier = DecisionTreeClassifier(max_depth=5)
     classifier.fit(X_train, y_train)
 
-    moonscalc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
-    moonscalc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
+    calc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
+    calc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 
     pyplot.title("Decision Tree")
     pyplot.show()
@@ -76,8 +76,8 @@ def use_randfor():
     classifier = RandomForestClassifier(max_depth=5, n_estimators=25)
     classifier.fit(X_train, y_train)
 
-    moonscalc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
-    moonscalc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
+    calc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
+    calc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 
     pyplot.title("Random Forest")
     pyplot.show()
@@ -87,8 +87,8 @@ def use_svm():
     classifier = SVC(C=100)
     classifier.fit(X_train, y_train)
 
-    moonscalc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
-    moonscalc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
+    calc.plot_2d_separator(classifier, X_train, fill=True, alpha=.3)
+    calc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 
     pyplot.title("Support Vector Machine")
     pyplot.show()

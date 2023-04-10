@@ -6,7 +6,7 @@ from matplotlib import pyplot
 
 from pandas import DataFrame
 
-from exercise1.helpers import moonscalc
+from exercise1.helpers import calc
 
 if __name__ == '__main__':
     # generate 2d classification dataset
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     mlp = MLPClassifier(solver='lbfgs', random_state=0, hidden_layer_sizes=[50, 25, 10], alpha=0.01)
     mlp.fit(X_train, y_train)
 
-    moonscalc.plot_2d_separator(mlp, X_train, fill=True, alpha=.3)
-    moonscalc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
+    calc.plot_2d_separator(mlp, X_train, fill=True, alpha=.3)
+    calc.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 
     pyplot.show()
