@@ -3,7 +3,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import pandas as pd
-from numpy import array, column_stack
+from numpy import column_stack
 
 df = pd.read_csv('data/StudentGrades.csv')
 
