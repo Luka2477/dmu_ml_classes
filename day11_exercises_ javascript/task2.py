@@ -61,9 +61,12 @@ mlp_test_accuracies = []
 
 thresholds = []
 
+logreg_clf = LogisticRegression(solver='liblinear')
+randfor_clf = RandomForestClassifier(max_depth=None, n_estimators=100)
+mlp_clf = MLPClassifier(solver='lbfgs', hidden_layer_sizes=(10, 25, 10), max_iter=sys.maxsize)
+
 for thresh in np.arange(0.1, 0.9, 0.1):  # Sweeping from threshold of 0.1 to 0.9
     # Logistic Regression
-    logreg_clf = LogisticRegression(solver='liblinear')
     logreg_clf.fit(X_train, y_train)
 
     logreg_y_pred_train_thresh = logreg_clf.predict_proba(X_train)[:, 1]
@@ -81,7 +84,6 @@ for thresh in np.arange(0.1, 0.9, 0.1):  # Sweeping from threshold of 0.1 to 0.9
     logreg_test_accuracies.append(logreg_test_acc)
 
     # Random Forest
-    randfor_clf = RandomForestClassifier(max_depth=5, n_estimators=25)
     randfor_clf.fit(X_train, y_train)
 
     randfor_y_pred_train_thresh = randfor_clf.predict_proba(X_train)[:, 1]
@@ -99,7 +101,6 @@ for thresh in np.arange(0.1, 0.9, 0.1):  # Sweeping from threshold of 0.1 to 0.9
     randfor_test_accuracies.append(randfor_test_acc)
 
     # Multi-Layer Perceptron Classifier
-    mlp_clf = MLPClassifier(solver='lbfgs', hidden_layer_sizes=(10, 25, 10), max_iter=sys.maxsize)
     mlp_clf.fit(X_train, y_train)
 
     mlp_y_pred_train_thresh = mlp_clf.predict_proba(X_train)[:, 1]
