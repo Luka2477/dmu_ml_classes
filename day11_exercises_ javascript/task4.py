@@ -1,3 +1,4 @@
+import random
 import sys
 
 from sklearn.datasets import load_digits
@@ -42,12 +43,16 @@ mat = confusion_matrix(y_test, y_preds)
 print(mat)
 
 # MLPC
-clf = MLPClassifier(hidden_layer_sizes=(100, 50, 25), max_iter=sys.maxsize)
-clf.fit(X_train, y_train)
-y_preds = clf.predict(X_test)
+max = 0
+while True:
+    clf = MLPClassifier(hidden_layer_sizes=[random.randint(25, 250) for _ in range(random.randint(1, 15))], max_iter=sys.maxsize, random_state=42)
+    clf.fit(X_train, y_train)
+    y_preds = clf.predict(X_test)
 
-acc = accuracy_score(y_test, y_preds)
-print(acc)
+    acc = accuracy_score(y_test, y_preds)
+    if max < acc:
+        max = acc
+        print(f"{clf.hidden_layer_sizes} | {acc}")
 
 mat = confusion_matrix(y_test, y_preds)
 print(mat)
