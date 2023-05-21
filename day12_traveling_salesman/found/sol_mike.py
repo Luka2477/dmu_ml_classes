@@ -126,11 +126,11 @@ def genetic_algorithm(population_size, generations):
 # plotCityRoute(fake_tour)
 
 # Here comes your GA program...
-POP_SIZE = 1000
-MUTATION_RATE = 0.05
-ROUTE_STOPS = 15
+POP_SIZE = 500
+MUTATION_RATE = 0.01
+ROUTE_STOPS = 30
 
-best_solution, best_fitness = genetic_algorithm(population_size=POP_SIZE, generations=50)
+best_solution, best_fitness = genetic_algorithm(population_size=POP_SIZE, generations=200)
 
 print(f"\nBest Solution: {best_solution}\nBest Fitness: {best_fitness}")
 plotCityRoute(best_solution)
