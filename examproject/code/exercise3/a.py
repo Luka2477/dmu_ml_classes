@@ -1,5 +1,6 @@
 import random
-import pandas
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Pos:
@@ -29,6 +30,15 @@ class Pos:
         return Pos(random.randint(a, b), random.randint(a, b))
 
 
+def plot_map(inner_map):
+    colors = ["white", "magenta", "red", "red", "blue"]
+    markers = ["", "x", "v", "^", "1"]
+    for row in range(len(inner_map)):
+        for col in range(len(inner_map[0])):
+            plt.scatter(col, abs(len(inner_map) - 1 - row), c=colors[inner_map[row][col]],
+                        marker=markers[inner_map[row][col]])
+
+
 # Exercise 1:
 # Make a construction of the "map", holding information about the obstacles, start and so on.
 #
@@ -48,6 +58,11 @@ real_map = \
 #     0  1  2  3  4  5  6  7  8  9  10
 real_start = Pos(9, 1)
 real_finish = Pos(1, 9)
+
+# Show map
+plot_map(real_map)
+plt.title("Original map")
+plt.show()
 
 
 # Exercise 2:
@@ -79,7 +94,8 @@ real_finish = Pos(1, 9)
 #
 class Robot:
     def __init__(self):
-        self.spaces = dict(open=0, obstacle=1, start=2, finish=3, visited=4, route_visited=5, route=6)
+        # self.spaces = dict(open=0, obstacle=1, start=2, finish=3, visited=4, route_visited=5, route=6)
+        self.spaces = dict(open=0, obstacle=1, start=2, finish=3, visited=4, route=5)
         self.map = [[self.spaces["obstacle"] for _ in range(len(real_map[0]))] for _ in range(len(real_map))]
         self.map[real_start.row][real_start.col] = self.spaces["start"]
         self.map[real_finish.row][real_finish.col] = self.spaces["finish"]
@@ -154,39 +170,72 @@ class Robot:
         if self.map[self.pos.row][self.pos.col] == self.spaces["open"]:
             self.map[self.pos.row][self.pos.col] = self.spaces["visited"]
 
-    def set_shortest_route(self, route):
-        for pos in route:
-            self.map[pos.row][pos.col] = self.spaces["route"]
+    # Helper method to neutralize the map before use for Dijkstras al.
+    def dijkstras_map_func(self, col: int):
+        if col != self.spaces["obstacle"]:
+            return 1
+        return np.inf
 
-    def _find_shortest_route(self, start: Pos, finish: Pos, route_len: int, route: list[Pos], inner_map):
-        route.append(start)
+    # Backtracking function
+    # Idea start at the last node then choose the least number of steps to go back
+    def backtrack(self, start: Pos, finish: Pos, distances: list[list[int]]):
+        path = [finish]
 
-        if start == finish:
-            return route_len, route, inner_map, True
+        while True:
+            potential_distances = []
+            potential_positions = []
 
-        results = []
-        for row in range(-1, 2):
-            for col in range(-1, 2):
-                new_pos = start + Pos(row, col)
-                if self.is_valid_move(new_pos) and inner_map[new_pos.row][new_pos.col] != self.spaces["route_visited"]:
-                    inner_map[new_pos.row][new_pos.col] = self.spaces["route_visited"]
-                    results.append(
-                        self._find_shortest_route(start + Pos(row, col), finish, route_len + 1, route,
-                                                  inner_map.copy()))
+            for drow in range(-1, 2):
+                for dcol in range(-1, 2):
+                    potential_pos = path[-1] + Pos(drow, dcol)
+                    if self.is_valid_pos(potential_pos):
+                        potential_positions.append(potential_pos)
+                        potential_distances.append(distances[potential_pos.row][potential_pos.col])
 
-        if len(results) == 0:
-            return route_len, route, inner_map, False
+            shortest_distance_index = np.argmin(potential_distances)
+            path.append(potential_positions[shortest_distance_index])
 
-        min = (1000, None, None)
-        for result in results:
-            if result[0] < min[0] and result[3]:
-                min = result
-        return min
+            if path[-1] == start:
+                break
 
-    def find_shortest_route(self):
-        start = self.finish or self.pos
-        route_map = list(map(lambda row: list(map(lambda col: 0 if col == self.spaces["visited"] else col, row)), self.map))
-        return self._find_shortest_route(start, self.start, 1, [], route_map)
+        return path
+
+    # Dijkstras algorithm for finding the shortest path between two nodes in a graph.
+    def dijkstras(self, start: Pos, finish: Pos):
+        path_map = [[self.dijkstras_map_func(col) for col in row] for row in self.map]
+        path_map[start.row][start.col] = 0.0
+        path_map[finish.row][finish.col] = 0.0
+
+        visited = [[False for _ in range(len(self.map))] for _ in range(len(self.map[0]))]
+
+        distances = [[np.inf for _ in range(len(self.map))] for _ in range(len(self.map[0]))]
+        distances[start.row][start.col] = 0
+
+        curr_pos = Pos(start.row, start.col)
+        while True:
+            for drow in range(-1, 2):
+                for dcol in range(-1, 2):
+                    potential_pos = curr_pos + Pos(drow, dcol)
+                    if self.is_valid_pos(potential_pos) and not visited[potential_pos.row][potential_pos.col]:
+                        distance = distances[curr_pos.row][curr_pos.col] + \
+                                   path_map[potential_pos.row][potential_pos.col]
+
+                        if distance < distances[potential_pos.row][potential_pos.col]:
+                            distances[potential_pos.row][potential_pos.col] = distance
+
+            visited[curr_pos.row][curr_pos.col] = True
+
+            t = [
+                [col if not visited[rowi][coli] else np.inf for coli, col in enumerate(row)]
+                for rowi, row in enumerate(distances)
+            ]
+            shortest_path_pos = np.unravel_index(np.argmin(t), np.shape(t))
+            curr_pos = Pos(shortest_path_pos[0], shortest_path_pos[1])
+
+            if curr_pos == finish:
+                break
+
+        return self.backtrack(start, finish, distances)
 
 
 if __name__ == '__main__':
@@ -199,7 +248,16 @@ if __name__ == '__main__':
 
         time_steps -= 1
 
-    print(pandas.DataFrame(robot.map))
-    route_len, route, route_map, reached_end = robot.find_shortest_route()
-    robot.set_shortest_route(route)
-    print(pandas.DataFrame(robot.map))
+    # Show searched area
+    plot_map(robot.map)
+    plt.title("After exploration")
+    plt.show()
+
+    # Find the shortest path
+    shortest_path = robot.dijkstras(robot.finish or robot.pos, robot.start)
+
+    # Show the shortest path
+    plot_map(robot.map)
+    plt.plot([pos.col for pos in shortest_path], [abs(len(real_map) - 1 - pos.row) for pos in shortest_path], "g")
+    plt.title("With shortest path")
+    plt.show()
